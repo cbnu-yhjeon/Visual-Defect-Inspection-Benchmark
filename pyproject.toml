@@ -1,0 +1,40 @@
+[project]
+name = "visual-defect-inspection-benchmark"
+version = "0.1.0"
+description = "MVTec AD 외관 결함 검사: 고전 영상처리 vs 지도학습 CNN vs 비지도 이상탐지"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "pandas>=2.1",
+    "opencv-python-headless>=4.9",
+    "scikit-learn>=1.4",
+    "scikit-image>=0.22",
+    "matplotlib>=3.8",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+    "torch==2.11.0",
+    "torchvision==0.26.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+torchvision = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

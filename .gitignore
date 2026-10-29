@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# MVTec AD는 CC BY-NC-SA 4.0 — 저장소에 넣지 않음 (scripts/download_mvtec.sh로 받음)
+/data
+# 리사이즈 캐시 · 이상 맵 · 모델 가중치
+cache/
+*.pt
+*.pth
+logs/

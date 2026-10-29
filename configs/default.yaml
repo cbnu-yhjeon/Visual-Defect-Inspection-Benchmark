@@ -1,0 +1,37 @@
+# 모든 실험의 기본 설정. src/run.py --config 로 바꿀 수 있다.
+data_root: data            # MVTec AD 루트 (scripts/download_mvtec.sh)
+cache_dir: cache
+image_size: 256
+seed: 0
+
+# 정상 학습 영상 중 임계값 결정용으로 떼어 두는 비율 (A · C 계열)
+val_fraction: 0.15
+image_threshold_quantile: 0.99   # 정상 검증 점수의 99번째 백분위수 → 판정 임계값
+pixel_threshold_quantile: 0.999  # 갤러리 결함 영역 표시용
+
+methods:
+  A1:  # 차분 + Otsu + 모폴로지
+    clahe_clip: 2.0
+    std_floor: 0.02
+    sigma: 4.0
+  A2:  # Gabor · LBP 텍스처
+    window: 32
+    stride: 4
+    bank_size: 100000
+    k: 3
+  C1:  # Conv Autoencoder
+    latent_channels: 16
+    steps: 2000
+    batch_size: 32
+    lr: 0.001
+  C2:  # PatchCore
+    backbone: wide_resnet50_2
+    coreset_ratio: 0.01
+    num_neighbors: 9
+  B:   # 전이학습 CNN (B1 = 불량 전체, B2 = 불량 수 변화)
+    backbone: resnet18
+    steps: 300
+    batch_size: 32
+    lr: 0.0003
+    folds: 5
+    n_defects: [1, 5, 10, all]

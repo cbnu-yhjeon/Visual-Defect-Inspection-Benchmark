@@ -141,8 +141,9 @@ def fig_texture_vs_object(df: pd.DataFrame) -> None:
         ax.set_ylim(0.4, 1.05)
         ax.grid(axis="x", visible=False)
         ax.set_title(title, color=INK, fontsize=12, loc="left")
-    axes[0].legend(loc="lower left", frameon=False, fontsize=8.5, ncol=1)
-    fig.tight_layout()
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper center", ncol=len(MAIN), frameon=False, fontsize=9)
+    fig.tight_layout(rect=(0, 0, 1, 0.92))
     fig.savefig(FIG / "texture_vs_object.png", dpi=130)
     plt.close(fig)
 
@@ -180,7 +181,7 @@ def fig_b2_curve(df: pd.DataFrame) -> None:
                 color="white" if abs(v) > lim * 0.6 else INK)
     ax.set_yticks(range(len(settings)), [f"불량 {t}" for t in xt])
     ax.set_xticks(range(len(gap.index)), gap.index, rotation=45, ha="right")
-    ax.set_title("지도 CNN − PatchCore (이미지 AUROC) · 파랑 = 지도학습 우세, 빨강 = PatchCore 우세",
+    ax.set_title("지도 CNN - PatchCore (이미지 AUROC 차이) · 파랑 = 지도학습 우세, 빨강 = PatchCore 우세",
                  color=INK, fontsize=11, loc="left")
     fig.tight_layout()
     fig.savefig(FIG / "b2_defect_count.png", dpi=130)
